@@ -1,3 +1,5 @@
+import "./styles/index.scss"
+
 const me = {
   myName: "sean",
   myAge: 30
