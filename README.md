@@ -1,22 +1,45 @@
-## Notes on webpack.config
+### Notes on webpack.config
 
-#1 - Webpack reads lists/arrays from right to left. So whatever is in the last position of an array in webpack.config is read FIRST.
+## 1
 
-#2 - In package.json...
+Webpack reads lists/arrays from right to left. So whatever is in the last position of an array in webpack.config is read FIRST.
+
+## 2
+
+In package.json...
 
 - "start" runs "webpack serve" and runs the dev server.
 - "build-dev" outputs dist folder in "development" mode, so we can see outputted files in an unminified format .
 - "build" runs "NODE_ENV=production webpack" which changes process.env.NODE_ENV to "production" which changes mode variable in webpack.confi.js. Run this as the final build for distribution.
+- "clean" runs "rm -rf dist" which cleans the dist folder.
 
-#3 - Both babel.config.js and postcss.config.js read .browserslistrc
+## 3
+
+Both babel.config.js and postcss.config.js read .browserslistrc
 (if there is one) to know what the target browsers are for vendor-prefixes
 and more.
 
-#4 - In babel.config.js, adding { runtime: "automatic" } to ["@babel/preset-react", ], allows JSX to be written without importing React. State, hooks and methods still need to be imported.
+## 4
 
-#5 - In webpack.config.js, resolve with the property extensions allows us to import modules without having to explicitly declare the metioned extensions.
+In babel.config.js, adding { runtime: "automatic" } to ["@babel/preset-react", ], allows JSX to be written without importing React. State, hooks and methods still need to be imported.
 
-# Known bugs
+## 5
+
+In webpack.config.js, resolve with the property extensions allows us to import modules without having to explicitly declare the metioned extensions.
+
+## 6
+
+No longer need loaders for images in Webpack 5: replaced with Asset Modules. output.assetModuleFilename declares a directory in the dist folder.
+
+- "asset" automatically chooses between exporting a data URI and emitting a separate file. Previously achievable by using url-loader with asset size limit.
+
+- "asset/resource" emits a separate file and exports the URL. Previously achievable by using file-loader.
+
+- "asset/inline" exports a data URI of the asset. Previously achievable by using url-loader.
+
+- "asset/source" exports the source code of the asset. Previously achievable by using raw-loader.
+
+### Known bugs
 
 #1 - In module.rules, load "postcss-loader" after "css-loader" but before
 "sass-loader" ie not in the last position of the array. Otherwise double
@@ -27,3 +50,12 @@ in source maps, which they shouldn't.
 causes module.exports.target to not work properly, causing .browserslistrc not being sent to the production builds properly, causing live reloading (webpack serve)to stop working.
 
 To fix, specify that in "development" mode, module.exports.target is targeting "web" and in production module.exports.target is targeting "browserslist".
+
+#3 - DID NOT GET THIS BUG.
+Not including these changes, app is supposed to crash. I did not experience this bug, but here is the code snippet if I ever do.
+use: [
+{
+loader: MiniCssExtractPlugin.loader,
+options: { publicPath: "" }
+}
+]

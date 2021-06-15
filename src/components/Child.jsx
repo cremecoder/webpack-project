@@ -1,5 +1,3 @@
-import React, { useState } from "react"
-
 function People({ name, age }) {
   return (
     <div>
