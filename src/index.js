@@ -1,6 +1,14 @@
 const me = {
-  name: "sean",
-  age: 30
+  myName: "sean",
+  myAge: 30
 }
 
-console.log(me)
+const timi = {
+  ...me,
+  herName: "timi",
+  herAge: 28
+}
+
+const us = [timi]
+
+console.log(us)
