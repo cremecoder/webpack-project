@@ -12,6 +12,10 @@
 (if there is one) to know what the target browsers are for vendor-prefixes
 and more.
 
+#4 - In babel.config.js, adding { runtime: "automatic" } to ["@babel/preset-react", ], allows JSX to be written without importing React. State, hooks and methods still need to be imported.
+
+#5 - In webpack.config.js, resolve with the property extensions allows us to import modules without having to explicitly declare the metioned extensions.
+
 # Known bugs
 
 #1 - In module.rules, load "postcss-loader" after "css-loader" but before
